@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Feb 1, 2018 2:28:25 AM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="Hibernate.Stock" table="stock" catalog="phoneshop" optimistic-lock="version">
+        <id name="id" type="java.lang.Integer">
+            <column name="id" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="product" class="Hibernate.Product" fetch="select">
+            <column name="product_id" not-null="true" />
+        </many-to-one>
+        <property name="availableQty" type="java.lang.Integer">
+            <column name="available_qty" />
+        </property>
+        <property name="unitPrice" type="java.lang.Double">
+            <column name="unit_price" precision="22" scale="0" />
+        </property>
+        <set name="invoiceItems" table="invoice_item" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="stock_id" not-null="true" />
+            </key>
+            <one-to-many class="Hibernate.InvoiceItem" />
+        </set>
+        <set name="listItemses" table="list_items" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="stock_id" not-null="true" />
+            </key>
+            <one-to-many class="Hibernate.ListItems" />
+        </set>
+    </class>
+</hibernate-mapping>
